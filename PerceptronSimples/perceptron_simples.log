@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.20)  23 OCT 2021 14:22
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.20)  25 OCT 2021 17:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -568,13 +568,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [1{/home/rodrigo/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
-Overfull \hbox (39.63467pt too wide) in paragraph at lines 76--77
-[]\T1/aer/m/n/12 Portanto, agora ire-mos preparar os da-dos, im-ple-men-tar a f
-unção $\OML/lmm/m/it/12 train[]perceptron$
- []
-
 LaTeX Font Info:    Trying to load font information for T1+aett on input line 7
 9.
+
 (/home/rodrigo/.TinyTeX/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
 )
@@ -680,7 +676,7 @@ lmex10.pfb></home/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb>
 </home/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></home/rodri
 go/.TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></home/rodrigo/.TinyTeX/t
 exmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on perceptron_simples.pdf (7 pages, 138503 bytes).
+Output written on perceptron_simples.pdf (7 pages, 138497 bytes).
 PDF statistics:
  138 PDF objects out of 1000 (max. 8388607)
  105 compressed objects within 2 object streams

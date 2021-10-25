@@ -32,7 +32,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introdução}
-  \par Neste trabalho nós utilizaremos a o algoritmo Perceptron Simples para classificar se um tumor é benigno ou maligno de acordo com a base de dados \textit{Breast Cancer}$^{\ref{BreastCancer}}$.
+  \par Neste trabalho nós utilizaremos o algoritmo Perceptron Simples para classificar se um tumor é benigno ou maligno de acordo com a base de dados \textit{Breast Cancer}$^{\ref{BreastCancer}}$.
 
 \section{Perceptron Simples}
 
@@ -59,7 +59,7 @@
 \end{equation*}
 
  
-  \par Os parâmetros que estamos interessados em descobrir são os pesos e o valor de $\theta$. Mas note que da forma que a equação $\ref{eq:limiar1}$ está disposta fica impossível utilizar o percpetron, pois após a multiplicação da entrada pelos pesos iremos comparar com o limiar, mas note que também não sabemos o limiar. Portanto, iremos fazer um pequeno ajuste na equação. 
+  \par Os parâmetros que estamos interessados em descobrir são os pesos e o valor de $\theta$. Mas note que da forma que a equação $\ref{eq:limiar1}$ está disposta fica impossível utilizar o percepetron, pois após a multiplicação da entrada pelos pesos iremos comparar com o limiar, mas note que também não sabemos o limiar. Portanto, iremos fazer um pequeno ajuste na equação. 
 
 \begin{equation}
     \left \{
@@ -71,9 +71,9 @@
       \label{eq:limiar2}
 \end{equation}
 
- \par Note que esta pequena alteração nos permite descobrir treinar a função de modo a descobrir os pesos e o limiar. Porque, basta colocarmos uma entrada padrão -1 que será multiplica por um valor aleatório de $\theta$ e agora valor de comparação da função degrau será centrado no zero. Portanto, o $\theta$ será atualizado assim como os pesos e no final a nossa função irá retornar $\theta, w1, w2$, respectivamente. 
+ \par Note que esta pequena alteração nos permite treinar a função de modo a descobrir os pesos e o limiar. Basta colocarmos uma entrada padrão -1 que será multiplicada por um valor aleatório de $\theta$, e com isso o valor de comparação da função degrau será centrado no zero. Portanto, o $\theta$ será atualizado assim como os pesos e no final a nossa função irá retornar $\theta, w1, w2$, respectivamente. 
       
-  \par Portanto, agora iremos preparar os dados, implementar a função $train\_perceptron$ e a função $calculate\_perceptron\_output$. Porém devo ressaltar que utilizaremos um número de peso arbitrário de modo que o algoritmo torne-se geral e possa ser aplicado independente da dimensão da entrada.  
+  \par Com isso, agora podemos implementar a função $train\_perceptron$ e a função $calculate\_perceptron\_output$. Devo ressaltar que utilizaremos um número de peso arbitrário de modo que o algoritmo torne-se geral e possa ser aplicado independentemente da dimensão da entrada.  
 
 \begin{Schunk}
 \begin{Sinput}
@@ -235,7 +235,7 @@
 
 \section{Treinamento}
 
-  \par Para fazer o treinamento iremos separar o conjunto de dados entre treinamento e teste. O conjunto de treinamento será utilizado para encontrar os pesos da nossa rede neural. O conjunto de teste será utilizado para analisar a capacidade do nosso classificador distinguir entre benigno e maligno. Esses dados devem ser escolhidos de forma aleatório de modo a não enviesar o estudo.
+  \par Para fazer o treinamento, iremos separar o conjunto de dados entre treinamento e teste. O conjunto de treinamento será utilizado para encontrar os pesos da nossa rede neural. O conjunto de teste será utilizado para analisar a capacidade do nosso classificador distinguir entre benigno e maligno. Esses dados devem ser escolhidos de forma aleatório de modo a não enviesar o estudo.
   
 \begin{Schunk}
 \begin{Sinput}
@@ -288,7 +288,7 @@
 > mean(accuracy)
 \end{Sinput}
 \begin{Soutput}
-[1] 0.977561
+[1] 0.9873171
 \end{Soutput}
 \begin{Sinput}
 > print("Desvio Padrão")
@@ -300,7 +300,7 @@
 > sd(accuracy)
 \end{Sinput}
 \begin{Soutput}
-[1] 0.01513064
+[1] 0.009146555
 \end{Soutput}
 \end{Schunk}
 
