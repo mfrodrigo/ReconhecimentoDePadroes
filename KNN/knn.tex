@@ -1,0 +1,63 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[portuguese]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[usenames]{color}
+
+
+\usepackage{Sweave}
+\begin{document}
+\input{knn-concordance}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\title{\LARGE \bf
+ Exercício 3 -  K-Nearest Neighbors}
+\author{ Rodrigo Machado Fonseca - 2017002253}
+\thispagestyle{fancy}
+\fancyhead[C]{Introdução ao Reconhecimento de Padrões - UFMG \\ Belo Horizonte - \today}
+\maketitle
+\thispagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introdução}
+
+  \par Neste trabalho iremos implementar o algoritmo \textit{k-Nearest Neighbors} na secão \ref{knn}. Em seguida, iremos utilizá-lo para classificar um conjunto de amostras. 
+  
+\section{K-Nearest Neighbors}
+  \label{knn}
+  \par O classificador \textit{k-Nearest Neighbors} é um classificador que utiliza métricas de distâncias para classificar novas amostras. Para entendermos como funcionar vamos analisar o conjunto de passos:
+
+  \begin{itemize}
+    \item Recebe uma amostra e calcula a distância para todas as amostras que já estão rótuladas. 
+    \item Ordena em ordem crescente de acordo com a distância calculada.
+    \item Escolhe as k primeiras amostras.
+    \item Conta o número de rótulos dentro do grupo escolhido.
+    \item Ordena em ordem decrescente. 
+    \item Atribui como rótulo da nova amostra o primeiro rótulo da lista. 
+  \end{itemize}
+
+  \par Para aplicar o método basta termos um conjunto de amostras que já estão rótuladas e a partir do momento que recebemos um novo número de amostras, podemos implementar a sequência de passos acima que teremos uma classificação para nova amostras. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{thebibliography}{99}
+		\bibitem{c1}\label{BreastCancer}
+\end{thebibliography}	
+
+
+\end{document}
