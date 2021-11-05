@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.20)  4 NOV 2021 22:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.20)  4 NOV 2021 22:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -638,7 +638,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 <knn-005.pdf, id=52, 433.62pt x 433.62pt>
 File: knn-005.pdf Graphic file (type pdf)
 <use knn-005.pdf>
-Package pdftex.def Info: knn-005.pdf  used on input line 163.
+Package pdftex.def Info: knn-005.pdf  used on input line 168.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 
@@ -647,7 +647,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-007.pdf, id=53, 433.62pt x 433.62pt>
 File: knn-007.pdf Graphic file (type pdf)
 <use knn-007.pdf>
-Package pdftex.def Info: knn-007.pdf  used on input line 171.
+Package pdftex.def Info: knn-007.pdf  used on input line 176.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -655,7 +655,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-008.pdf, id=54, 433.62pt x 433.62pt>
 File: knn-008.pdf Graphic file (type pdf)
 <use knn-008.pdf>
-Package pdftex.def Info: knn-008.pdf  used on input line 178.
+Package pdftex.def Info: knn-008.pdf  used on input line 183.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -663,7 +663,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-009.pdf, id=55, 433.62pt x 433.62pt>
 File: knn-009.pdf Graphic file (type pdf)
 <use knn-009.pdf>
-Package pdftex.def Info: knn-009.pdf  used on input line 185.
+Package pdftex.def Info: knn-009.pdf  used on input line 190.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -671,7 +671,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-011.pdf, id=56, 433.62pt x 433.62pt>
 File: knn-011.pdf Graphic file (type pdf)
 <use knn-011.pdf>
-Package pdftex.def Info: knn-011.pdf  used on input line 196.
+Package pdftex.def Info: knn-011.pdf  used on input line 201.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -679,7 +679,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-013.pdf, id=57, 433.62pt x 433.62pt>
 File: knn-013.pdf Graphic file (type pdf)
 <use knn-013.pdf>
-Package pdftex.def Info: knn-013.pdf  used on input line 204.
+Package pdftex.def Info: knn-013.pdf  used on input line 209.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -687,7 +687,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-014.pdf, id=58, 433.62pt x 433.62pt>
 File: knn-014.pdf Graphic file (type pdf)
 <use knn-014.pdf>
-Package pdftex.def Info: knn-014.pdf  used on input line 211.
+Package pdftex.def Info: knn-014.pdf  used on input line 216.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -695,7 +695,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-015.pdf, id=59, 433.62pt x 433.62pt>
 File: knn-015.pdf Graphic file (type pdf)
 <use knn-015.pdf>
-Package pdftex.def Info: knn-015.pdf  used on input line 218.
+Package pdftex.def Info: knn-015.pdf  used on input line 223.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -703,7 +703,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-017.pdf, id=60, 433.62pt x 433.62pt>
 File: knn-017.pdf Graphic file (type pdf)
 <use knn-017.pdf>
-Package pdftex.def Info: knn-017.pdf  used on input line 227.
+Package pdftex.def Info: knn-017.pdf  used on input line 232.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -711,7 +711,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-019.pdf, id=61, 433.62pt x 433.62pt>
 File: knn-019.pdf Graphic file (type pdf)
 <use knn-019.pdf>
-Package pdftex.def Info: knn-019.pdf  used on input line 235.
+Package pdftex.def Info: knn-019.pdf  used on input line 240.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -719,7 +719,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-020.pdf, id=62, 433.62pt x 433.62pt>
 File: knn-020.pdf Graphic file (type pdf)
 <use knn-020.pdf>
-Package pdftex.def Info: knn-020.pdf  used on input line 242.
+Package pdftex.def Info: knn-020.pdf  used on input line 247.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -727,7 +727,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <knn-021.pdf, id=63, 433.62pt x 433.62pt>
 File: knn-021.pdf Graphic file (type pdf)
 <use knn-021.pdf>
-Package pdftex.def Info: knn-021.pdf  used on input line 249.
+Package pdftex.def Info: knn-021.pdf  used on input line 254.
 (pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -760,11 +760,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [6 <./knn-007.pdf>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 269.
+(Font)              <12> on input line 274.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 269.
+(Font)              <8> on input line 274.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 269.
+(Font)              <6> on input line 274.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -865,11 +865,11 @@ Package rerunfilecheck Info: File `knn.out' has not changed.
 Here is how much of TeX's memory you used:
  10261 strings out of 480539
  150820 string characters out of 5902403
- 450826 words of memory out of 5000000
+ 451826 words of memory out of 5000000
  27647 multiletter control sequences out of 15000+600000
  450257 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,11n,66p,653b,389s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,12n,66p,653b,519s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/rodrigo/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcst1200.600pk
 > </home/rodrigo/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk>
 </home/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></h
@@ -877,7 +877,7 @@ ome/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home
 /rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></home
 /rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></home/r
 odrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on knn.pdf (16 pages, 426371 bytes).
+Output written on knn.pdf (16 pages, 427029 bytes).
 PDF statistics:
  237 PDF objects out of 1000 (max. 8388607)
  180 compressed objects within 2 object streams
