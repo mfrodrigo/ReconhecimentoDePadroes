@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.20)  1 NOV 2021 16:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021) (preloaded format=pdflatex 2021.10.20)  4 NOV 2021 22:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -446,7 +446,35 @@ File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count295
 \l__pdf_internal_box=\box99
 )
-(./knn.aux)
+(./knn.aux
+
+LaTeX Warning: Label `sd_0.3' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.3' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.3' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.5' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.5' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.5' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.7' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.7' multiply defined.
+
+
+LaTeX Warning: Label `sd_0.7' multiply defined.
+
+)
 \openout1 = `knn.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
@@ -467,8 +495,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
-
-(/home/rodrigo/.TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+ (/home/rodrigo/.TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 
 (/home/rodrigo/.TinyTeX/texmf-dist/tex/latex/grfext/grfext.sty
@@ -569,6 +596,27 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [1{/home/rodrigo/.TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
+LaTeX Font Info:    Trying to load font information for T1+aett on input line 6
+2.
+
+(/home/rodrigo/.TinyTeX/texmf-dist/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+)
+LaTeX Font Info:    Trying to load font information for TS1+aett on input line 
+66.
+
+(/usr/share/R/share/texmf/tex/latex/ts1aett.fd
+File: ts1aett.fd 
+)
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
+66.
+
+(/home/rodrigo/.TinyTeX/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `TS1/aett/m/sl' in size <12> not available
+(Font)              Font shape `TS1/cmtt/m/sl' tried instead on input line 66.
+
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 27.11194pt, for example:
@@ -577,26 +625,262 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 (fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
 
-[2] (./knn.aux)
+[2]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[3]
+<knn-005.pdf, id=52, 433.62pt x 433.62pt>
+File: knn-005.pdf Graphic file (type pdf)
+<use knn-005.pdf>
+Package pdftex.def Info: knn-005.pdf  used on input line 163.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-007.pdf, id=53, 433.62pt x 433.62pt>
+File: knn-007.pdf Graphic file (type pdf)
+<use knn-007.pdf>
+Package pdftex.def Info: knn-007.pdf  used on input line 171.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-008.pdf, id=54, 433.62pt x 433.62pt>
+File: knn-008.pdf Graphic file (type pdf)
+<use knn-008.pdf>
+Package pdftex.def Info: knn-008.pdf  used on input line 178.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-009.pdf, id=55, 433.62pt x 433.62pt>
+File: knn-009.pdf Graphic file (type pdf)
+<use knn-009.pdf>
+Package pdftex.def Info: knn-009.pdf  used on input line 185.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-011.pdf, id=56, 433.62pt x 433.62pt>
+File: knn-011.pdf Graphic file (type pdf)
+<use knn-011.pdf>
+Package pdftex.def Info: knn-011.pdf  used on input line 196.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-013.pdf, id=57, 433.62pt x 433.62pt>
+File: knn-013.pdf Graphic file (type pdf)
+<use knn-013.pdf>
+Package pdftex.def Info: knn-013.pdf  used on input line 204.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-014.pdf, id=58, 433.62pt x 433.62pt>
+File: knn-014.pdf Graphic file (type pdf)
+<use knn-014.pdf>
+Package pdftex.def Info: knn-014.pdf  used on input line 211.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-015.pdf, id=59, 433.62pt x 433.62pt>
+File: knn-015.pdf Graphic file (type pdf)
+<use knn-015.pdf>
+Package pdftex.def Info: knn-015.pdf  used on input line 218.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-017.pdf, id=60, 433.62pt x 433.62pt>
+File: knn-017.pdf Graphic file (type pdf)
+<use knn-017.pdf>
+Package pdftex.def Info: knn-017.pdf  used on input line 227.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-019.pdf, id=61, 433.62pt x 433.62pt>
+File: knn-019.pdf Graphic file (type pdf)
+<use knn-019.pdf>
+Package pdftex.def Info: knn-019.pdf  used on input line 235.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-020.pdf, id=62, 433.62pt x 433.62pt>
+File: knn-020.pdf Graphic file (type pdf)
+<use knn-020.pdf>
+Package pdftex.def Info: knn-020.pdf  used on input line 242.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<knn-021.pdf, id=63, 433.62pt x 433.62pt>
+File: knn-021.pdf Graphic file (type pdf)
+<use knn-021.pdf>
+Package pdftex.def Info: knn-021.pdf  used on input line 249.
+(pdftex.def)             Requested size: 312.00119pt x 312.01428pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[4]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[5 <./knn-005.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[6 <./knn-007.pdf>]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 269.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 269.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 269.
+
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[7 <./knn-008.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[8 <./knn-009.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[9 <./knn-011.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[10 <./knn-013.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[11 <./knn-014.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[12 <./knn-015.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[13 <./knn-017.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[14 <./knn-019.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[15 <./knn-020.pdf>]
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 27.11194pt, for example:
+(fancyhdr)                \setlength{\headheight}{27.11194pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+
+(fancyhdr)                \addtolength{\topmargin}{-15.11194pt}.
+
+[16 <./knn-021.pdf>] (./knn.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `knn.out' has not changed.
-(rerunfilecheck)             Checksum: CA2E5D6A35B0044018B13B0936EAEDD2;240.
+(rerunfilecheck)             Checksum: 8555126EA1FF06AE7D452128FB785F27;659.
  ) 
 Here is how much of TeX's memory you used:
- 10042 strings out of 480539
- 147197 string characters out of 5902403
- 448400 words of memory out of 5000000
- 27480 multiletter control sequences out of 15000+600000
- 436226 words of font info for 72 fonts, out of 8000000 for 9000
+ 10261 strings out of 480539
+ 150820 string characters out of 5902403
+ 450826 words of memory out of 5000000
+ 27647 multiletter control sequences out of 15000+600000
+ 450257 words of font info for 94 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 60i,11n,66p,287b,449s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/rodrigo/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk
-></home/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></
-home/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></hom
-e/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on knn.pdf (2 pages, 45051 bytes).
+ 60i,11n,66p,653b,389s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/rodrigo/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcst1200.600pk
+> </home/rodrigo/.TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk>
+</home/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmb10.pfb></h
+ome/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home
+/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></home
+/rodrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></home/r
+odrigo/.TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on knn.pdf (16 pages, 426371 bytes).
 PDF statistics:
- 52 PDF objects out of 1000 (max. 8388607)
- 39 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 237 PDF objects out of 1000 (max. 8388607)
+ 180 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 113 words of extra memory for PDF output out of 10000 (max. 10000000)
 
