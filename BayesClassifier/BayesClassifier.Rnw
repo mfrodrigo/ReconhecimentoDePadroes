@@ -76,19 +76,19 @@ calc_vero <- function(x1, x2, m1, m2, s1, s2, covc){
 bayes_paramaters <- function(x){
   c1 = x[x[,3] == 0, ]
   c2 = x[x[,3] == 1, ]
-  m1c1 = mean(c1[1, ])
-  m2c1 = mean(c1[2, ])
-  s1c1 = sd(c1[1, ])
-  s2c1 = sd(c1[2, ])
-  covc1 = cov(c1[1, ], (c1[2, ]))
+  m1c1 = mean(c1[,1])
+  m2c1 = mean(c1[,2 ])
+  s1c1 = sd(c1[,1])
+  s2c1 = sd(c1[,2])
+  covc1 = cov(c1[, 1], (c1[,2]))
   
-  m1c2 = mean(c2[1, ])
-  m2c2 = mean(c2[2, ])
-  s1c2 = sd(c2[1, ])
-  s2c2 = sd(c2[2, ])
-  covc2 = cov(c2[1, ], (c2[2, ]))
+  m1c2 = mean(c2[, 1])
+  m2c2 = mean(c2[, 2])
+  s1c2 = sd(c2[ ,1])
+  s2c2 = sd(c2[ ,2])
+  covc2 = cov(c2[ ,1], (c2[ ,2]))
   par_c1 <- c(m1c1, m2c1, s1c1, s2c1, covc1)
-  par_c2 <- c(m1c1, m2c2, s1c2, s2c2, covc2)
+  par_c2 <- c(m1c2, m2c2, s1c2, s2c2, covc2)
   return(list(par_c1, par_c2))
 }
 @
@@ -152,6 +152,7 @@ e $m2 = (4; 4)^T$ e coeficiente de correlação nulo.}
   \par Uma vez definido as amostras, iremos separar $90\%$ para construir o modelo e $10\%$ para treinar o modelo. 
   
 <<echo=TRUE>>=
+set.seed(12)
 x <- rbind(c1, c2)
 index <- sample(1:nrow(x), length(1:nrow(x)))
 x <- x[index,]
@@ -159,7 +160,7 @@ training_sample_number = round(nrow(x)*0.9)
 x_train <- x[1:training_sample_number,]
 x_test <- x[(training_sample_number+1):nrow(x), ]
 y_hat <- bayes_classifier(x_train, x_test)
-acuraccy <- sum(abs(y_hat - x_test[,3]))/length(y_hat)
+acuraccy <- 1 - sum(abs(y_hat - x_test[,3]))/length(y_hat)
 @
 
 
