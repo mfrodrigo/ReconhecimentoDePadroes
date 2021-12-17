@@ -1,0 +1,185 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[portuguese]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[usenames]{color}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\title{\LARGE \bf
+ Exercício 6  -  Aplicação LSSVM}
+\author{ Rodrigo Machado Fonseca - 2017002253}
+\thispagestyle{fancy}
+\fancyhead[C]{Introdução ao Reconhecimento de Padrões - UFMG \\ Belo Horizonte - \today}
+\maketitle
+\thispagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introdução}
+
+  \par Neste exercício utilizaremos o \textit{Least Square Support Vector Machine} (LSSVM) para resolver o problema de classificação de tipos de vidros do banco de dados Glass (base nativa da Linguagem), a partir de suas características químicas.
+
+\section{Least Square SVM}
+
+  \par \textit{Least Square SVM} (LSSVM) são versões de mínimos quadrados de máquinas de vetores de suporte (SVM). Nesta versão, encontra-se a solução resolvendo um conjunto de equações lineares em vez de um problema de programação quadrática convexa para SVMs clássicos. Algoritmos eficientes e escaláveis, como aqueles baseados em gradiente, podem ser aplicados para resolver LSSVM.
+  
+  \par A diferença entre o SVM e o LSSVM baseia-se, principalmente, na definição do erro. Neste caso definimos o erro como uma igualdade, conforme a equação a seguir:
+  
+\begin{equation}
+min_{w, v,e} J_p(w,v,e)=0.5w^{T}w+\gamma 0.5\sum_{i=1}^{N}e_i^2
+\end{equation}
+
+sujeito a 
+
+\begin{equation}
+y_i[w^T\varphi(X_i)+b]=1-e_i, \ \ \ \ \ \ i=1,......,N
+\end{equation}
+
+  \par O $\gamma$ é o parâmetro de regularização e estar relacionado as variáveis de folga.
+  
+  \par O problema está sujeito as seguintes restrições:
+  
+\begin{equation}
+  w = \sum_{i}^{N} \alpha_iy_i\varphi(x_i)
+\end{equation}
+
+\begin{equation}
+  \sum_{i}^{N} \alpha_iy_i = 0
+\end{equation}
+
+\begin{equation}
+  \alpha_i = \gamma e_i \ \ \forall_i
+\end{equation}
+
+\begin{equation}
+y_i[w^T\varphi(X_i)+b]-1 + e_i = 0 \ \ \forall_i
+\end{equation}
+
+  \par A condição 3 possibilita que a LSSVM não resulte, necessariamente, em valores de $\alpha$ nulos, como em SVM. O parâmetro $\gamma$ é uma proporcionalidade, não limitando assim o valor superior de $\alpha_i$.
+  
+
+\section{Metodologia}
+
+  \par A priori, será carregada a base de dados Glass do R. A seguir pode-se ver uma pequena amostra da base de dados:
+<<echo=FALSE>>=
+rm(list = ls())
+library(mlbench)
+library(caret)
+library('kernlab')
+
+data(Glass)
+x <- as.matrix(Glass[,1:9])
+y <- as.numeric(as.matrix(Glass[,10]))
+data.frame(as.matrix(Glass[1:5,]))
+@
+
+  \par Em sequência, iremos utilizar a normalização para que todas variáveis possam ter o mesmo peso no modelo, com a seguinte equação:
+\begin{equation}
+x'_{i} = \frac{x_i - min(x)}{max(x) - min(x)}
+\end{equation}
+<<echo=False>>=
+max <- apply(x, 2, function(x){max(x)})
+min <- apply(x, 2, function(x){min(x)})
+for(i in 1:(dim(x)[1]))
+{
+  for(j in 1:(dim(x)[2]))
+  {
+    x[i,j] = (x[i,j] - min[j])/(max[j] - min[j])      
+  }
+}
+
+@
+  \par Neste problema, as classes estão desbalanceadas, como pode ser visto a seguir, onde cada coluna representa o \textit{label} e a linha representa a quantidade de dados de cada classe:
+<<echo=False>>=
+table(y)
+@
+
+ \par Por fim, iremos separar 70\%  do conjunto para treino e 30\% para teste. 
+
+<<echo=False>>=
+training_lssvm <- function(x_train, y_train, x_test, y_test, r, tau){
+  best_accuracy <- 0
+  best_value <- 0
+  accuracy_list <- c()
+  for(i in 1:length(r)){
+    lssvm <- lssvm(x_train, y_train,
+                           type='classification', 
+                           kernel='rbfdot',
+                           kpar=list(sigma=r[i]),
+                           tau=tau[i],
+                           tol=0.0000001)
+    y_hat <- predict(lssvm, x_test)
+    accuracy <- sum((y_test==y_hat)*1)/length(y_hat)
+    accuracy_list <- c(accuracy_list, accuracy)
+    if(accuracy > best_accuracy){
+      best_accuracy <- accuracy
+      lssvm_salve <- lssvm
+      best_value <- i
+    }
+  }
+  return(list(lssvm, accuracy_list, best_value))
+}
+@
+
+\section{Resultados}
+  
+  \par Neste experimento iremos para cada conjunto de parâmetros "kpar" e "tau"($\gamma$) faremos ele 10 vezes o experimento e por fim analisaremos a média e o desvio padrão.
+  
+<<echo=True>>=
+set.seed(1)
+accuracy_final <- matrix(nrow=10, ncol=9)
+for(i in 1:10){
+  index <- createDataPartition(y,
+                               p = 0.7, 
+                               list = FALSE)
+  x_train <- x[index,]
+  y_train <- y[index]
+  x_test <- x[-index,]
+  y_test <- y[-index]
+  r <- c(0.1, 0.1, 0.1, 0.2, 0.3, 0.4, 0.1, 0.1, 0.1)
+  tau <- c(0.3, 0.45, 0.5, 0.5, 0.5, 0.9, 0.2, 0.1, 0.8)
+  results <- training_lssvm(x_train, y_train, x_test, y_test, r, tau)
+  svm <- results[[1]]
+  accuracy_list <- results[[2]]
+  accuracy_final[i,] <- as.matrix(accuracy_list, nrow=1)
+}
+@
+
+  \par Nas tabelas a seguir estão representadas as médias e os desvios padrão para cada experimento.
+<<echo=FALSE>>=
+data.frame(colMeans(accuracy_final))
+sd <- apply(accuracy_final, 2, function(x){sd(x)})
+data.frame(sd)
+@
+
+
+\section{Discussão}
+
+  \par Neste exercício, assim como no anterior, os parâmetros da função utilizada para treinar foram ajustadas, a fim de obter o melhor resultado possível. Após o problema chegar a $58\%$ de acurácia, ele estagnou e não foi possível aumentar a acurácia. Tentamos deixar o parâmetro "kpar" automático, porém isso não se motrou mais vantajoso. 
+  
+  \par É possível notar que a acurácia média obtida tem valor menor do que aquela obtida no exercício anterior, que tratava do mesmo problema, porém utilizando o classificador SVM. Este resultado nos leva a crer que as SVMs, apesar de apresentarem carga computacional maior, parecem apresentar desempenho um pouco melhor. O único ponto que devemos tomar cuidado é o fato que o as parâmetros foram definidos de forma arbitrária e sem nenhum rigor matemático.
+  
+  \par Logo, com o experimento foi possível compreender melhor o comportamento do algoritmo LSSVM, além de que conseguimos construir e validar um classificador LSSVM. É possível afirmar que a prática foi bem executada e o classificador construído apresentou um resultado razoável.
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\end{document}

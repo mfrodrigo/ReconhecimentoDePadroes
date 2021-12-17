@@ -1,0 +1,178 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[portuguese]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[usenames]{color}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\title{\LARGE \bf
+ Exercício 5  -  Aplicação SVM}
+\author{ Rodrigo Machado Fonseca - 2017002253}
+\thispagestyle{fancy}
+\fancyhead[C]{Introdução ao Reconhecimento de Padrões - UFMG \\ Belo Horizonte - \today}
+\maketitle
+\thispagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introdução}
+
+  \par Neste exercício utilizaremos o \textit{Support Vector Machine} (SVM) para resolver o problema de classificação de tipos de vidros do banco de dados Glass (base nativa da Linguagem) a partir de suas características químicas.
+  
+\section{Metodologia}
+
+  \par A priori, será carregada a base de dados Glass do R. A seguir pode-se ver um pequena amostra da base de dados:
+<<echo=FALSE>>=
+rm(list = ls())
+library(mlbench)
+library('kernlab')
+
+data(Glass)
+x <- as.matrix(Glass[,1:9])
+y <- as.numeric(as.matrix(Glass[,10]))
+data.frame(as.matrix(Glass[1:5,]))
+@
+
+  \par Em sequência, iremos utilizar a normalização para que todas variáveis possam ter o mesmo peso no modelo, com a seguinte equação:
+\begin{equation}
+x'_{i} = \frac{x_i - min(x)}{max(x) - min(x)}
+\end{equation}
+<<echo=False>>=
+max <- apply(x, 2, function(x){max(x)})
+min <- apply(x, 2, function(x){min(x)})
+for(i in 1:(dim(x)[1]))
+{
+  for(j in 1:(dim(x)[2]))
+  {
+    x[i,j] = (x[i,j] - min[j])/(max[j] - min[j])      
+  }
+}
+
+@
+  \par Neste problema as classes estão desbalanceadas como pode ser visto a seguir, onde cada coluna representa o \textit{label} e a linha representa a quantidade de dados de cada classe:
+<<echo=False>>=
+table(y)
+@
+
+  \par Por fim iremos separar 70\%  do conjunto para treino e 30\% para teste. Como neste exercício as classes estão desbalanceadas iremos forçar que todas tenham a mesma proporção do conjunto original. Para isso construímos a seguinte função:
+<<echo=TRUE>>=
+sample_proportion <- function(x, y){
+  labels <- names(table(y))
+  x_train <- matrix(ncol = ncol(x))
+  y_train <- c()
+  x_test <- matrix(ncol = ncol(x))
+  y_test <- c()
+  for(i in labels){
+    aux <- strtoi(i)
+    y_aux <- y[y==aux]
+    x_aux <- x[y==aux, ]
+    index <- sample(1:nrow(x_aux), length(1:nrow(x_aux)))
+    x_aux <- x_aux[index,1:ncol(x_aux)]
+    y_aux <- y_aux[index]
+    training_sample_number = round(nrow(x_aux)*0.7)+1
+    x_aux_train <- x_aux[1:training_sample_number,]
+    y_aux_train <- y_aux[1:training_sample_number]
+    x_aux_test <- x_aux[(training_sample_number+1):nrow(x_aux), ]
+    y_aux_test <- y_aux[(training_sample_number+1):nrow(x_aux)]
+    y_train <- c(y_train, y_aux_train)
+    x_train <- rbind(x_train, x_aux_train)
+    y_test <- c(y_test, y_aux_test)
+    x_test <- rbind(x_test, x_aux_test)
+  }
+  x_train <- x_train[2:nrow(x_train), 1:ncol(x_train)]
+  index <- sample(1:nrow(x_train), length(1:nrow(x_train)))
+  x_train <- x_train[index,1:ncol(x_train)]
+  y_train <- y_train[index]
+  x_test <- x_test[2:nrow(x_test), 1:ncol(x_test)]
+  index <- sample(1:nrow(x_test), length(1:nrow(x_test)))
+  x_test <- x_test[index,1:ncol(x_test)]
+  y_test <- y_test[index]
+  return(list(x_train,
+              y_train,
+              x_test,
+              y_test))
+}
+@
+
+<<echo=False>>=
+training_svm <- function(x_train, y_train, x_test, y_test, r, C_par){
+  best_accuracy <- 0
+  best_value <- 0
+  accuracy_list <- c()
+  for(i in 1:length(r)){
+    svm <- ksvm(x_train,y_train,type='C-bsvc',
+                kernel='rbfdot',
+                kpar=list(sigma=r[i]),
+                C=C_par[i])
+    y_hat <- predict(svm, x_test)
+    accuracy <- sum((y_test-y_hat)==0)/length(y_hat)
+    accuracy_list <- c(accuracy_list, accuracy)
+    if(accuracy > best_accuracy){
+      best_accuracy <- accuracy
+      svm_salve <- svm
+      best_value <- i
+    }
+  }
+  return(list(svm_salve, accuracy_list, best_value))
+}
+@
+
+\section{Resultados}
+  
+  \par Neste experimento iremos para cada conjunto de parâmetros "kpar" e "C" faremos ele 10 vezes e por fim analisaremos a média e o desvio padrão.
+  
+<<echo=True>>=
+set.seed(1)
+accuracy_final <- matrix(nrow=10, ncol=9)
+for(i in 1:10){
+  samples <- sample_proportion(x, y)
+  x_train <- samples[[1]]
+  y_train <- samples[[2]]
+  x_test <- samples[[3]]
+  y_test <- samples[[4]]
+  r <- c(0.025, 0.025, 0.025, 0.015, 0.015, 0.015, 0.01, 0.01, 0.01)
+  C_par <- c(700, 500, 900, 800, 900, 930, 500, 600, 800)
+  results <- training_svm(x_train, y_train, x_test, y_test, r, C_par)
+  svm <- results[[1]]
+  accuracy_list <- results[[2]]
+  accuracy_final[i,] <- as.matrix(accuracy_list, nrow=1)
+}
+@
+
+  \par Nas tabelas a seguir estão representadas as médias e os desvios padrão para cada experimento.
+<<echo=FALSE>>=
+data.frame(colMeans(accuracy_final))
+sd <- apply(accuracy_final, 2, function(x){sd(x)})
+data.frame(sd)
+@
+
+
+\section{Discussão}
+
+  \par Neste exercício os parâmetros “kpar” e “C” foram escolhidos novamente de forma aleatória, e foram ajustados conforme a acurácia dos resultados. Isso mostrou-se extremamente ineficiente. Para melhorar o desempenho do algoritmo sugiro duas hipóteses: (1) definir os parâmetros, pelo menos os primeiros, com alguma expressão envolvendo a dimensionalidade do problema; (2) rodar o algoritmo em paralelo com um conjunto de valores, e para cada conjunto escolher o melhor e criar um novo conjunto de acordo com uma distribuição de probabilidade. No final, comparar entre cada resultado obtido e escolher o melhor. O único problema do passo 2 pode ser o custo computacional para construí-lo.
+  
+   \par O melhor resultado obtido foi para "kpar" igual a 0.025 e "C" igual a 700. Nota-se que este valor ($\approx$ 75\%) é muito menor do que o obtido pelo problema anterior (100 \%). Esse problema possui 9 dimensões e 6 classes, o que aumenta consideravelmente a complexidade do problema.
+  
+  \par Logo, com o experimento foi possível compreender melhor o comportamento do algoritmo SVM, além de que conseguimos construir e validar um classificador SVM. É possível afirmar que a prática foi bem executada e o classificador construído apresentou um bom razoável. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\end{document}
