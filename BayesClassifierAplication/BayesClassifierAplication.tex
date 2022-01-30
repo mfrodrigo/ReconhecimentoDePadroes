@@ -1,0 +1,195 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[portuguese]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[usenames]{color}
+
+
+\usepackage{Sweave}
+\begin{document}
+\input{BayesClassifierAplication-concordance}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\title{\LARGE \bf
+ Exercício 8  - Classificador de Bayes aplicado a um problema
+Multivariado }
+\author{ Rodrigo Machado Fonseca - 2017002253}
+\thispagestyle{fancy}
+\fancyhead[C]{Introdução ao Reconhecimento de Padrões - UFMG \\ Belo Horizonte - \today}
+\maketitle
+\thispagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introdução}
+
+  \par Neste trabalho iremos implementar o algoritmo Classificador de Bayes \ref{ClassificadorBayes}. Em seguida, iremos utilizá-lo para classificar um conjunto de amostras.
+
+\section{Algoritmo de Bayes Multivariado}
+  \label{ClassificadorBayes}
+  \par O algoritmo de Bayes não se altera, e será definido pelos seguintes passos:
+  
+   \begin{itemize}
+  \item Calcular P[A] e P[B].
+  \item Escolher um elemento para ser classificado. 
+  \item Calcular a Verossimilhança. 
+  \item Classificar o elemento.
+  \end{itemize}
+
+  \par Para o caso multivariado é necessário calcular a densidade conjunto da seguinte maneira:
+  
+  \begin{equation}
+  p(x) = \frac{1}{\sqrt((2*\pi)^n|\Sigma|)}\dot exp(-0.5(x-\mu)^T\Sigma^{-1}*(x-\mu)), 
+  \end{equation}
+  
+  \par onde $\Sigma$ é a matriz de covariâncias, $|\Sigma|$ é o determinante da matriz de covariância e $\mu$ é o vetor de médias das distribuições marginais. Tal equação está expressa pelo seguinte linha de código:
+
+\begin{Schunk}
+\begin{Sinput}
+> rm(list=ls())
+> pdfnvar <- function(x, m , K, n){
++   first_term = (1/(sqrt((2*pi)^n*(det(K)))))
++   return(first_term*exp(-0.5*(t(x - m)%*% (solve(K)) %*% (x - m))))
++ }
+\end{Sinput}
+\end{Schunk}
+
+  \par O restante do algoritmo permanece inalterado como pode ser visto nos trechos a seguir:
+
+\begin{Schunk}
+\begin{Sinput}
+> bayes_paramaters <- function(x_train){
++   c1 = x_train[x_train[,ncol(x_train)] == 1, ]
++   c2 = x_train[x_train[,ncol(x_train)] == 2, ]
++   meanc1 <- apply(c1[,1:ncol(x_train)-1], 2, mean)
++   covc1 <- cov(c1[,1:ncol(x_train)-1])
++   par_c1 <- list(meanc1, covc1)
++   meanc2 <- apply(c2[,1:ncol(x_train)-1], 2, mean)
++   covc2 <- cov(c2[,1:ncol(x_train)-1])
++   par_c2 <- list(meanc2, covc2)
++   return(list(par_c1, par_c2))
++ }
+\end{Sinput}
+\end{Schunk}
+
+
+  \par 
+\begin{Schunk}
+\begin{Sinput}
+> bayes_classifier <- function(x_train, x_test){
++   pC1 = (nrow(x_train[x_train[ ,14] == 1, ])) / nrow(x_train)
++   pC2 = 1-pC1
++   parameters <- bayes_paramaters(x_train)
++   par_c1 <- parameters[[1]]
++   par_c2 <- parameters[[2]]
++   y_hat <- matrix(nrow = nrow(x_test), ncol = 1)
++   x_aux <- x_test[,1:ncol(x_test)-1]
++   for(i in sample(nrow(x_aux))){
++     p1 <- pdfnvar(x_aux[i, ],
++                   par_c1[[1]],
++                   par_c1[[2]],
++                   ncol(x_aux))
++     p2 <- pdfnvar(x_aux[i, ],
++                     par_c2[[1]],
++                     par_c2[[2]],
++                     ncol(x_aux))
++     if(p1*pC1/(p2*pC2) >= 1){
++       y_hat[i] <- 1
++     }
++     else{
++       y_hat[i] <- 2
++     }
++   }
++   return(y_hat)
++ }
+\end{Sinput}
+\end{Schunk}
+
+
+
+\section{Experimento}
+
+  \par Neste experimento utilizaremos a base \textit{Startlog (Heart)}$^{[\ref{Heart}]}$.
+ 
+\begin{Schunk}
+\begin{Sinput}
+> # Carregar a base de dados
+> data <- as.matrix(read.table("heart.dat", sep = ' '))
+\end{Sinput}
+\end{Schunk}
+  \par A base apresenta os seguintes atributos:
+  
+  \begin{itemize}
+       \item  1. idade
+       \item  2. sexo
+       \item  3. tipo de dor no peito (4 valores)
+       \item  4. pressão arterial em repouso
+       \item  5. colesterol sérico em mg / dl
+       \item  6. açúcar no sangue em jejum> 120 mg / dl
+       \item  7. resultados eletrocardiográficos de repouso (valores 0,1,2)
+       \item  8. frequência cardíaca máxima alcançada
+       \item  9. angina induzida por exercício
+       \item  10. pico antigo = depressão de ST induzida por exercício em relação ao repouso
+       \item  11. a inclinação do segmento ST de pico de exercício
+       \item  12. número de vasos principais (0-3) coloridos por fluorosopia
+       \item  13. tal: 3 = normal; 6 = defeito corrigido; 7 = defeito reversível
+  \end{itemize}
+  
+  \par A predição é 1 quando não possui doença  cardíaca, e 2 caso contrário. Há 150 amostras da classe 1 e 120 amostras da classe 2. 
+  
+  \par Neste experimento serão separados aleatoriamente 90\% dos dados para treinamento e 10\% para teste. Ao final, deveremos calcular a acurácia obtida com o classificador. Posteriormente, o mesmo procedimento será repetido com amostras de treinamento de 70\% e 20\%.
+
+
+\section{Resultados}
+
+  
+
+  \par A tabela a seguir estão expostos os resultados de cada experimento:
+  
+\begin{table}[h]
+        \center
+        \begin{tabular}{|c|c|}
+            \hline
+            Porcentagem Treino & Acurácia \\
+            \hline
+            $90\%$ & 0.962962962962963 \\
+            \hline
+             $70\%$ & 0.851851851851852 \\
+             \hline
+             $20\%$ & 0.689814814814815 \\
+        	\hline
+    	\end{tabular} 
+        \caption{Atributos da base de dados \textit{Startlog (Heart)}.}
+        \label{tab:heart}
+\end{table}
+
+\section{Conclusão}
+
+  \par É possível notar que os valores de acurácia foram menores que aqueles encontrados no exercício anterior. Isso se deve ao fato de que este problema apresenta maior complexidade, principalmente por ser multivariado. Além disso, a proporção de dados não estava perfeitamente equilibrada como no exercício anterior.  Nesse sentido, se trata de um problema de solução mais difícil e portanto realmente se espera acurácias mais baixas para o classificador.
+  
+  \par Na tabela \ref{tab:heart} podemos ver que quanto maior o número do conjunto de treino maior a acurácia. Isso ocorre porque o conjunto de treinamento é utilizado na construção do classificador, e portanto é importante se ter um conjunto grande para tornar o classificador o mais geral e eficiente possível. 
+  
+  \par É importante salientar que mesmo o conjunto com 20\% de amostras obteve resultado bom levando em conta a limitação do conjunto de treinamento. 
+  \par Com o experimento foi possível compreender melhor o funcionamento do classificador de Bayes e implementá-lo de forma satisfatória. Os resultados obtidos podem provar que o classificador de Bayes com um conjunto de amostras suficientemente grande possui um ótimo desempenho. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{thebibliography}{99}
+		\bibitem{c1}\label{Heart}  \url{https://archive.ics.uci.edu/ml/datasets/statlog+(heart)}
+\end{thebibliography}	
+
+
+\end{document}

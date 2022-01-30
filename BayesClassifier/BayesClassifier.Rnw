@@ -57,6 +57,8 @@
   \item Classificar o elemento.
   \end{itemize}
 
+  \par O código implementado é mostrado a seguir:
+  
 <<echo=TRUE>>=
 rm(list=ls())
 calc_vero <- function(x1, x2, m1, m2, s1, s2, covc){
@@ -126,13 +128,14 @@ bayes_classifier <- function(x_train, x_test){
 }
 @
 
-\section{Metodologia}
+\section{Exercício 1}
 
-  \par A priori, iremos construir duas classes a partir de uma distribuição normal. A classe C1 terá o centro em (2, 2) e desvião padrão igual a 0.8 e a classe C2 terá o centro em  (4, 4) e com desvião padrão 0.4. 
+  \par A priori, iremos construir duas classes a partir de uma distribuição normal. A classe C1 terá o centro em (2, 2) e desvião padrão igual a 0.8 e a classe C2 terá o centro em  (4, 4) e com desvião padrão 0.4, como mostrado na figura \ref{ex1}. 
   
 \begin{figure}[h]
 \centering
 <<fig = True, echo=False>>=
+set.seed(10)
 s1<-0.8
 s2<-0.4
 nc<-200
@@ -149,10 +152,9 @@ e $m2 = (4; 4)^T$ e coeficiente de correlação nulo.}
 \label{ex1}
 \end{figure}
 
-  \par Uma vez definido as amostras, iremos separar $90\%$ para construir o modelo e $10\%$ para treinar o modelo. 
+\par Uma vez definido as amostras, iremos separar $90\%$ para construir o modelo e $10\%$ para treinar o modelo. O gráfico \ref{tre_tst} mostra os dados de treinamento e teste antes da classificação.
   
 <<echo=TRUE>>=
-set.seed(12)
 x <- rbind(c1, c2)
 index <- sample(1:nrow(x), length(1:nrow(x)))
 x <- x[index,]
@@ -163,12 +165,170 @@ y_hat <- bayes_classifier(x_train, x_test)
 acuraccy <- 1 - sum(abs(y_hat - x_test[,3]))/length(y_hat)
 @
 
+\begin{figure}
+\centering
+<<fig = True, echo=False>>=
+# Plot treino e teste
+x_train_c1 = x_train[x_train[,3] == 0, ]
+x_train_c2 = x_train[x_train[,3] == 1, ]
+plot(x_train_c1[ ,1], x_train_c1[ ,2],col = 'red',xlim= c(-2,6), ylim=c(-2,6),xlab = 'x_1', ylab='x_2')
+par(new=T)
+plot(x_train_c2[ ,1], x_train_c2[ ,2],col = 'blue',xlim= c(-2,6), ylim=c(-2,6),xlab = '', ylab='')
+par(new=T)
+plot(x_test[ ,1], x_test[ ,2],col = 'black',xlim= c(-2,6), ylim=c(-2,6),xlab = '', ylab='')
+@
+\caption{Gráfico com amostras de treinamento e amostras de teste não classificadas}
+\label{tre_tst}
+\end{figure}
 
-\section{Resultados}
+\par Uma vez feita a classificação, mostramos abaixo o percentual de acertos do conjunto de teste:
+<<echo>>=
+print(100*acuraccy)
+@
 
+\par Por fim, o gráfico \ref{sup} mostra a superfície de separação gerada com o classificador construído para o problema.
+
+\begin{figure}
+\centering
+<<fig = True, echo=False>>=
+# Superficie de separacao
+x1seq <- seq(-2, 6, 0.1)
+x2seq <- seq(-2, 6, 0.1)
+M <- matrix(nrow = length(x1seq), ncol = length(x2seq))
+for(i in 1:length(x1seq))
+{
+  for(j in 1:length(x2seq))
+  {
+    x1 <-x1seq[i]
+    x2 <- x2seq[j]
+    x_in <-matrix(c(x1, x2), nrow = 1)
+    y_hat <- bayes_classifier(x_train, x_in)
+    M[i, j] = y_hat
+  }  
+}
+
+plot(c1[ ,1],c1[ ,2],col = 'red',xlim= c(-2,6), ylim=c(-2,6),xlab = 'x1', ylab='x2')
+par(new=T)
+plot(c2[ ,1],c2[ ,2],col = 'blue',xlim= c(-2,6), ylim=c(-2,6),xlab = '', ylab='')
+par(new = T)
+contour(x1seq, x2seq, M, nlevels = 1, xlim = c(-2,6), ylim = c(-2,6), xlab = '', ylab='')
+@
+\caption{Superfície de separação}
+\label{sup}
+\end{figure}
+
+\section{Exercício 2}
+Agora os dados de entrada devem ser amostrados de quatro gaussianas, como mostrado na figura \ref{xor}. Para todas as gaussianas foi adotados desvio padrão igual a 0.4.
+
+\begin{figure}
+\centering
+<<fig = True, echo=False>>=
+library('RSNNS')
+
+s1<-0.4
+s2<-0.4
+nc<-200
+xc11<-matrix(rnorm(nc*2),ncol=2)*s1 + t(matrix((c(-1,-1)), ncol=nc, nrow=2))
+yc11<-matrix(0,nrow=200, ncol=1)
+xc12<-matrix(rnorm(nc*2),ncol=2)*s2 + t(matrix((c(1,1)), ncol=nc, nrow=2))
+yc12<-matrix(0,nrow=200, ncol=1)
+xc21<-matrix(rnorm(nc*2),ncol=2)*s1 + t(matrix((c(-1,1)), ncol=nc, nrow=2))
+yc21<-matrix(1,nrow=200, ncol=1)
+xc22<-matrix(rnorm(nc*2),ncol=2)*s2 + t(matrix((c(1,-1)), ncol=nc, nrow=2))
+yc22<-matrix(1,nrow=200, ncol=1)
+
+xc1 <- rbind(xc11, xc12)
+yc1 <- rbind(yc11, yc12)
+
+xc2 <- rbind(xc21, xc22)
+yc2 <- rbind(yc21, yc22)
+
+x <- rbind(xc1, xc2)
+y <- rbind(yc1, yc2)
+
+# Plot treino e teste
+plot(xc1[ ,1], xc1[ ,2],col = 'blue',xlim= c(-2.5,2.5), ylim=c(-2.5,2.5),xlab = 'x_1', ylab='x_2')
+par(new=T)
+plot(xc2[ ,1], xc2[ ,2],col = 'green',xlim= c(-2.5,2.5), ylim=c(-2.5,2.5),xlab = '', ylab='')
+@
+\caption{Problema XOR}
+\label{xor}
+\end{figure}
+
+\par Uma vez definido as amostras, iremos separar $90\%$ para construir o modelo e $10\%$ para treinar o modelo. O gráfico \ref{tre_tst2} mostra os dados de treinamento e teste antes da classificação.
+
+<<echo=TRUE>>=
+set.seed(0)
+x <- cbind(x, y)
+index <- sample(1:nrow(x), length(1:nrow(x)))
+x <- x[index,]
+training_sample_number = round(nrow(x)*0.9)
+x_train <- x[1:training_sample_number,]
+x_test <- x[(training_sample_number+1):nrow(x), ]
+y_hat <- bayes_classifier(x_train, x_test)
+acuraccy <- 1 - sum(abs(y_hat - x_test[,3]))/length(y_hat)
+@
+
+\begin{figure}[h]
+\centering
+<<fig = True, echo=False>>=
+# Plot treino e teste
+x_train_c1 = x_train[x_train[,3] == 0, ]
+x_train_c2 = x_train[x_train[,3] == 1, ]
+plot(x_train_c1[ ,1], x_train_c1[ ,2],col = 'blue',xlim= c(-2.5,2.5), ylim=c(-2.5,2.5),xlab = 'x_1', ylab='x_2')
+par(new=T)
+plot(x_train_c2[ ,1], x_train_c2[ ,2],col = 'green',xlim= c(-2.5,2.5), ylim=c(-2.5,2.5),xlab = '', ylab='')
+par(new=T)
+plot(x_test[ ,1], x_test[ ,2],col = 'black',xlim= c(-2.5,2.5), ylim=c(-2.5,2.5),xlab = '', ylab='')
+@
+\caption{Gráfico com amostras de treinamento e amostras de teste não classificadas}
+\label{tre_tst2}
+\end{figure}
+
+\par Uma vez feita a classificação, mostramos abaixo o percentual de acertos do conjunto de teste:
+<<echo>>=
+print(100*acuraccy)
+@
+
+\par Por fim, o gráfico \ref{sup2} mostra a superfície de separação gerada com o classificador construído para o problema.
+
+\begin{figure}[h]
+\centering
+<<fig = True, echo=False>>=
+# Superficie de separacao
+x1seq <- seq(-2.5, 2.5, 0.1)
+x2seq <- seq(-2.5, 2.5, 0.1)
+M <- matrix(nrow = length(x1seq), ncol = length(x2seq))
+for(i in 1:length(x1seq))
+{
+  for(j in 1:length(x2seq))
+  {
+    x1 <-x1seq[i]
+    x2 <- x2seq[j]
+    x_in <-matrix(c(x1, x2), nrow = 1)
+    y_hat <- bayes_classifier(x_train, x_in)
+    M[i, j] = y_hat
+  }  
+}
+
+plot(xc1[ ,1],xc1[ ,2],col = 'blue',xlim= c(-2.5,2.5), ylim=c(-2.5,2.5),xlab = 'x1', ylab='x2')
+par(new=T)
+plot(xc2[ ,1],xc2[ ,2],col = 'green',xlim= c(-2.5,2.5), ylim=c(-2.5,2.5),xlab = '', ylab='')
+par(new = T)
+contour(x1seq, x2seq, M, nlevels = 1,xlim= c(-2.5,2.5), ylim=c(-2.5,2.5), xlab = '', ylab='')
+@
+\caption{Superfície de separação}
+\label{sup2}
+\end{figure}
 
 \section{Conclusão}
+  \par É possível perceber que o problema número 2 obteve menor acurácia. Este problema divide o espaço em quatro regiões, onde cada região possui um centro (centro da gaussiana). Já no problema anterior o espaço era divido em 2 regiões, com um centro cada. Em ambos os problemas, podemos visualizar os centros como vértices de um quadrado. No caso do primeiro problema, a distãncia entre os 2 centros é a diagonal deste quadrado. Para o segundo problema, as duas classes adicionadas nos vértices remanecentes fazem com que agora tenha duas classes mais próximas com distância igual ao lado do quadrado. Portanto, a distância entre os centros mais próximos se reduziu. Devido aos fatores supracitados, é possível afirmar que no segundo problema as amostras devem possuir menor grau de liberdade para se manterem no quadrante correto, porque o espaço possui mais centros e a distância entre os centros mais próximos é menor. Por esse motivo, a probabilidade de se existir uma superposição de classes é maior, o que torna a solução um pouco mais complexa. Isso reflete a menor acurácia encontrada no problema 2. De qualquer maneira, essa acurácia, ainda que menor, permanece muito próxima de 100\%.
+  
+  \par A geração dos gráficos com as amostras de teste classificadas e com a superfície de separação também foram relevantes para ilustrar a eficiência do classificador e observar seu comportamento em todo o espaço do gráfico. 
+  
+  \par Com o experimento foi possível compreender melhor o funcionamento do classificador de Bayes e implementá-lo de forma satisfatória. Os resultados obtidos podem provar que o classificador de Bayes tem desempenho muito bom para os problemas de classificação tratados nesse exercício. 
 
+\end{document}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
