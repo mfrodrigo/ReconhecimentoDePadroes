@@ -32,25 +32,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introdução}
 
-  \par Este exercício consiste avaliar o desempenho de um classificador na tarefa de reconhecer imagens de faces humanas.
+  \par Este exercício consiste em avaliar o desempenho de um classificador na tarefa de reconhecer imagens de faces humanas.
   
 \section{PCA}
   
-  \par A técnica de PCA baseia-se em  reduzir a dimensionalidade de um conjunto de dados, preservando o máximo de “variabilidade” (ou seja, informações estatísticas) possível. Diminiur a dimensionalidade implica reduzir a complexidade do sistema, o que acarreta, menos gasto computacional para resolver determinados problemas. Além disso, reduzir a dimensionalidade implica a possibilidade de uma análise visual, o que não seria possível em um espaçõ de alta dimensão. 
+  \par A técnica de PCA baseia-se em  reduzir a dimensionalidade de um conjunto de dados, preservando o máximo de “variabilidade” (ou seja, informações estatísticas) possível. Diminiur a dimensionalidade implica reduzir a complexidade do sistema, o que acarreta menos gasto computacional para resolver determinados problemas. Além disso, reduzir a dimensionalidade implica a possibilidade de uma análise visual, o que não seria possível em um espaço de alta dimensão. 
   
   \par O algoritmo do PCA baseia-se nos seguintes passos:
   
   \begin{itemize}
-    \item Cálcula a média dos dados
-    \item Sutrai a média dos dados 
-    \item Calcula a matriz de covariância
-    \item Encontre os auto-valores e auto vetores
+    \item Calcular a média dos dados;
+    \item Sutrair a média dos dados; 
+    \item Calcular a matriz de covariância;
+    \item Encontrar os auto-valores e auto-vetores.
     
   \end{itemize}
   
 \section{Experimento}
 
-  \par A priori, carregou-se a base de dados Olivetti. Em sequência, criou-se rótulos para indicar cada uma das classes e aplicou-se o algoritmo PCA.
+  \par A priori, carregou-se a base de dados Olivetti. A figura \ref{olivetti} ilustra um exemplo da base. Em sequência, criou-se rótulos para indicar cada uma das classes e aplicou-se o algoritmo PCA.
 
 <<echo=TRUE>>=
 rm(list=ls())
@@ -78,7 +78,7 @@ MostraImagem(faces[1, ])
 @
 
 \caption{Imagem da base Olivetti.}
-\label{1}
+\label{olivetti}
 \end{figure}
 
 <<echo=TRUE>>=
@@ -94,7 +94,7 @@ trans <- preProcess(faces, method = c("BoxCox", "center", "scale", "pca"))
 PC <- predict(trans, faces)
 @
 
-  \par Em sequência selecionou-se as 10 primeiras componentes. Esta base de dados não possui o vetor de rótulos, porém sabemos que cada classe possui 10 amostras e estão dispostas sequencialmente. O código abaixo gera o vetor de rótulos y. Como existem 40 classes o vetor contém valores de rótulos variando entre 1 e 40.
+  \par Em sequência, selecionou-se as 10 primeiras componentes. Esta base de dados não possui o vetor de rótulos, porém sabemos que cada classe possui 10 amostras e estão dispostas sequencialmente. O código abaixo gera o vetor de rótulos y. Como existem 40 classes, o vetor contém valores de rótulos variando entre 1 e 40.
 <<echo=TRUE>>=
 faces <- PC[,(1:10)]
 
@@ -105,7 +105,7 @@ for(i in 1:nrow(faces) )
 }
 @
 
-  \par Para relizar  treinar o modelo separou-se 50\% dos dados e o restante para teste. Após isso utilizou-se um classificador bayesiano (\textit{naiveBayes}) e calculou-se a acurácia. Cada experimento foi repetido 10 vezes. 
+  \par Para treinar o modelo, separou-se 50\% dos dados e o restante para teste. Após isso, utilizou-se um classificador bayesiano (\textit{naiveBayes}) e calculou-se a acurácia. Cada experimento foi repetido 10 vezes. 
   
 <<echo=TRUE>>=
 x <- faces
@@ -141,19 +141,18 @@ for (k in 1:10)
 
 \par Por fim, para a última classficação realizada, gerou-se uma matriz de confusão com os resultados obtidos. Essa matriz de confusão será apresentada na seção seguinte e ela será utilizada para fazer a discussão do desempenho do sistema. A matriz de confusão foi construída por meio da função \textit{conf\_mat} do pacote \textit{yardstick}.
 
-\section{resultados}
+\section{Resultados}
 
-  \par Abaixo segue os resutlados da acurácia em cada rodada, a média da acurácia e o desvio padrão, respectivamente.
+  \par Abaixo segue os resultados da acurácia em cada rodada, a média da acurácia e o desvio padrão, respectivamente.
   
-<<echo=FALSE>>=
+<<echo=TRUE>>=
 print(accuracy_vec * 100)
 @
 
-<<echo=FALSE>>=
+<<echo=TRUE>>=
 print(mean(accuracy_vec))
 print(sd(accuracy_vec))
 @
-
 
 \par Em sequência, a figura \ref{1} abaixo apresenta os resultados da última classificação na forma de matriz de confusão.
 
@@ -174,7 +173,7 @@ autoplot(cm, type = "heatmap") + scale_fill_gradient(low="#D6EAF8",high = "#2E86
 
   \par Após o experimento, pode-se observar que a utilização de apenas 10 componentes principais não obteve resultados satisfatório. Uma alternativa é aumentar o número de componentes principais e analisar os resultados. 
   
-  \par A matriz de confusão mostra os elementos e suas classsificações. Pode-se observar que algumas amostras são projetadas em cima de outras classes, por exemplo a 39, em que 6 amostras foram classsificadas sobre a classe 22. Além disos, podemos observar que não havia nenhuma amostra da classe 22 naquela rodada. 
+  \par A matriz de confusão mostra os elementos e suas classsificações. Pode-se observar que algumas amostras são projetadas em cima de outras classes, por exemplo a 39, em que 6 amostras foram classsificadas sobre a classe 22. Além disso, podemos observar que não havia nenhuma amostra da classe 22 naquela rodada. 
   
   \par Embora os resultados obtidos foram abaixo do esperado, foi possível avaliar o algoritmo PCA e utilizá-lo em conjunto com classificador de Bayes. 
 
