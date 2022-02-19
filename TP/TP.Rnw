@@ -1,0 +1,126 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[portuguese]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[usenames]{color}
+
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+\title{\LARGE \bf
+ Exercício  - }
+\author{ Rodrigo Machado Fonseca - 2017002253}
+\thispagestyle{fancy}
+\fancyhead[C]{Introdução ao Reconhecimento de Padrões - UFMG \\ Belo Horizonte - \today}
+\maketitle
+\thispagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Metodologia}
+
+<<echo=True>>=
+rm(list = ls())
+library(readr)
+library(tidyverse) 
+library(caret)
+library(kernlab)
+library(e1071)
+data <- read_csv("treino.csv")
+y <- data[[41]]
+x <- as.matrix(data[2:40])
+data <- cbind(x,y)
+@
+
+<<echo=True>>=
+N = 5
+trans <- prcomp(x)
+PC <- predict(trans, x)
+x <- PC[,1:N]
+@
+
+<<echo=True>>=
+# folds = createFolds(y, k = 10)
+# cv = lapply(folds, function(z) {
+#   x_train <- x[z, ]
+#   y_train <- y[z]
+#   x_test <- x[-z, ]
+#   y_test <- y[-z]
+#   classifier <- svm(x =x_train,
+#                    y=y_train,
+#                    type = 'C-classification',
+#                    kernel = 'radial')
+#   y_pred <- predict(classifier, newdata =x_test)
+#   cm <- table(y_test, y_pred)
+#   accuracy = (cm[1,1] + cm[2,2]) / (cm[1,1] + cm[2,2] + cm[1,2] + cm[2,1])
+#   return(accuracy)
+# })
+
+@
+
+<<echo=TRUE>>=
+# accuracy <- t(as.data.frame(cv))
+@
+
+
+<<echo=TRUE>>=
+library('mlr')
+folds = createFolds(y, k = 10)
+cv = lapply(folds, function(z) {
+  x_train <- x[z, ]
+  y_train <- y[z]
+  x_test <- x[-z, ]
+  y_test <- y[-z]
+  
+  # Grid search
+  df <- data.frame(x_train, y_train)
+  df$y_train <- as.factor(df$y_train)
+  task <- makeClassifTask(data = df, target = "y_train")
+  discrete_ps = makeParamSet(
+    makeDiscreteParam("C", values = c(0.5, 1.0, 1.5, 2.0)),
+    makeDiscreteParam("sigma", values = c(0.5, 1.0, 1.5, 2.0))
+  )
+  ctrl = makeTuneControlGrid()
+  rdesc = makeResampleDesc("CV", iters = 3L)
+  res = tuneParams("classif.ksvm", task = task, resampling = rdesc,
+                   par.set = discrete_ps, control = ctrl)
+  C <- res$x$C
+  sigma <- res$x$sigma
+  
+  # Treinar a SVM
+  svm <- ksvm(x_train,y_train,type='C-bsvc',kernel='rbfdot',kpar=list(sigma=sigma),C=C)
+  y_pred <- predict(svm, x_test)
+  cm <- table(y_test, y_pred)
+  accuracy = (cm[1,1] + cm[2,2]) / (cm[1,1] + cm[2,2] + cm[1,2] + cm[2,1])
+  return(accuracy)
+})
+@
+
+<<echo=TRUE>>=
+accuracy <- t(as.data.frame(cv))
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{thebibliography}{99}
+		\bibitem{c1}\label{BreastCancer}
+\end{thebibliography}	
+
+
+\end{document}
