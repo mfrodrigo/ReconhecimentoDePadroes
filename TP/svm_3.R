@@ -4,6 +4,7 @@ library(tidyverse)
 library(caret)
 library(kernlab)
 library(e1071)
+library('mlr')
 data <- read_csv("treino.csv")
 y <- data[[41]]
 x <- as.matrix(data[2:40])
@@ -15,10 +16,10 @@ thirties<- sum((y=="thirties")*1)
 fourties<- sum((y=="fourties")*1)
 fifties<- sum((y=="fifties")*1)
 
-# N <- 15
-# trans <- prcomp(x)
-# PC <- predict(trans, x)
-# x <- PC[,1:N]
+N <- 5
+trans <- prcomp(x)
+PC <- predict(trans, x)
+x <- PC[,1:N]
 
 folds = createFolds(y, k = 10)
 
@@ -32,7 +33,7 @@ cv = lapply(folds, function(z) {
   df <- data.frame(x_train, y_train)
   df$y_train <- as.factor(df$y_train)
   task <- makeClassifTask(data = df, target = "y_train")
-  discrete_ps = num_ps = makeParamSet(
+  num_ps = makeParamSet(
     makeNumericParam("C", lower = -10, upper = 10,
                      trafo = function(x) 10^x),
     makeNumericParam("sigma", lower = -10, upper = 10,

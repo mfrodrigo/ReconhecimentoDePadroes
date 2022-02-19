@@ -4,17 +4,20 @@ library(tidyverse)
 library(caret)
 library(kernlab)
 library(e1071)
+library(FSDAM)
+library(reticulate)
+library(pcaMethods)
 data <- read_csv("treino.csv")
 y <- data[[41]]
 x <- as.matrix(data[2:40])
 data <- cbind(x,y)
 
-# N <- 30
-# trans <- prcomp(x)
-# PC <- predict(trans, x)
-# x <- PC[,1:N]
-
+x <- pca(x, nPcs=39, method="nlpca", maxSteps=50)
+aux <- x@completeObs
+aux1 <- x
+x <- x@completeObs
 folds = createFolds(y, k = 10)
+
 cv = lapply(folds, function(z) {
   x_train <- x[-z, ]
   y_train <- y[-z]
@@ -22,7 +25,7 @@ cv = lapply(folds, function(z) {
   y_test <- y[z]
   classifier <- svm(x =x_train,
                    y=y_train,
-                   type = 'nu-classification',
+                   type = 'C-classification',
                    kernel = 'radial')
   y_pred <- predict(classifier, newdata =x_test)
   comp <- y_test == y_pred
